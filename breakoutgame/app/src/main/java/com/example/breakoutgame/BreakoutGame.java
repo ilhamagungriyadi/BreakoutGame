@@ -170,7 +170,7 @@ public class BreakoutGame extends AppCompatActivity {
 
             // Put the ball back to the start
             ball.reset(screenX, screenY);
-            paddle.reset(screenX);
+            paddle.reset(screenX, screenY);
 
             int brickWidth = screenX / 8;
             int brickHeight = screenY / 10;
@@ -224,7 +224,15 @@ public class BreakoutGame extends AppCompatActivity {
             // Move the paddle if required
             paddle.update(fps);
 
+            if (paddle.getRect().left < 0)
+            {
+                paddle.setMovementState(paddle.RIGHT);
+            }
 
+            if (paddle.getRect().right > screenX - 10) {
+                paddle.setMovementState(paddle.LEFT);
+
+            }
             ball.update(fps);
 
             // Check for ball colliding with a brick
@@ -293,6 +301,15 @@ public class BreakoutGame extends AppCompatActivity {
 
             {
                 paused = true;
+
+                createBricksAndRestart();
+            }
+
+            if (lives == 0)
+
+            {
+                paused = true;
+
                 createBricksAndRestart();
             }
 
@@ -341,7 +358,7 @@ public class BreakoutGame extends AppCompatActivity {
                 }
 
                 // Has the player lost?
-                if (lives <= 0) {
+                if (lives == 0) {
                     paint.setTextSize(90);
                     canvas.drawText("YOU HAVE LOST!", 10, screenY / 2, paint);
                 }
@@ -400,26 +417,6 @@ public class BreakoutGame extends AppCompatActivity {
             }
             return true;
         }
-
-        // The SurfaceView class implements onTouchListener
-        // So we can override this method and detect screen touches.
-//        @Override
-//        public boolean onTouchEvent(MotionEvent motionEvent) {
-//
-//            switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-//
-//                // Player has touched the screen
-//                case MotionEvent.ACTION_DOWN:
-//
-//                    break;
-//
-//                // Player has removed finger from screen
-//                case MotionEvent.ACTION_UP:
-//
-//                    break;
-//            }
-//            return true;
-//        }
 
     }
     // This is the end of our BreakoutView inner class

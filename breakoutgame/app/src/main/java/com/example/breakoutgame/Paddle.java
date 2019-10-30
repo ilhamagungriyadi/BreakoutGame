@@ -43,7 +43,7 @@ public class Paddle {
         rect = new RectF(x, y, x + length, y + height);
 
         // How fast is the paddle in pixels per second
-        paddleSpeed = 350;
+        paddleSpeed = 400;
     }
 
     // This is a getter method to make the rectangle that
@@ -63,27 +63,23 @@ public class Paddle {
     public void update(long fps){
         if(paddleMoving == LEFT){
             x = x - paddleSpeed / fps;
-            if (x <= -8)
-            {
-                x = -8;
-            }
         }
 
         if(paddleMoving == RIGHT){
             x = x + paddleSpeed / fps;
-            if (x >= 2000) {
-                x = 2000;
-            }
         }
 
         rect.left = x;
         rect.right = x + length;
     }
 
-    public  void reset(int center){
-        rect.left = center / 2;
-        rect.right = center / 2 + length;
-        x = center /2;
+    public void reset(int x, int y){
+
+        rect.left = x / 2 ;
+        rect.top = y - 20;
+        rect.right = x / 2 + length;
+        this.x = x / 2;
+        this.y = y - 20;
     }
 
 }
